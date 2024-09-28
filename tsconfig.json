@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    
+    "rootDir": "./src",
+    "outDir": "./build",
+    "target": "es2022",    
+    "module": "commonjs", 
+    "baseUrl": "./src",
+    "paths": {
+      "@configs/*": ["../../configs/*"],
+      "@interfaces": ["./base/interfaces/exportInterfaces.ts"],
+      "@classes": ["./base/classes/exportClasses.ts"],
+      "@handlers": ["./base/handlers/exportHandlers.ts"],
+      "@events/*": ["./events/*"]
+    }, 
+    "esModuleInterop": true,                   
+    "forceConsistentCasingInFileNames": true,     
+    "strict": true,
+    "skipLibCheck": true                      
+  },
+  "exclude": ["node_modules"], 
+}
