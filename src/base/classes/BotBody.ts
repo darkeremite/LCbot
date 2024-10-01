@@ -1,10 +1,15 @@
 import { IBotBody, IConfig, IHandler } from "@interfaces";
-import { EventHandler } from "@handlers";
-import { Client } from "discord.js";
+import { CommandHandler, EventHandler } from "@handlers";
+import { Client, Collection } from "discord.js";
+import { Command } from "@classes";
 
 export class BotBody extends Client implements IBotBody {
     config: IConfig;
-    handlers: IHandler[];
+    commands: Collection<string, Command>;
+    handlers: {
+        EventHandler: IHandler;
+        CommandHandler: IHandler;
+    };
 
     constructor() {
         super({ 
@@ -14,9 +19,11 @@ export class BotBody extends Client implements IBotBody {
         });
 
         this.config = require("@configs/discordbot.json");
-        this.handlers = [
-            new EventHandler(this)
-        ]
+        this.commands = new Collection<string, Command>();
+        this.handlers = {
+            EventHandler: new EventHandler(this), 
+            CommandHandler: new CommandHandler(this)
+        }
     }
     async Init(): Promise<any> {
         await this.LoadHandlers();
@@ -24,6 +31,7 @@ export class BotBody extends Client implements IBotBody {
     }
 
     async LoadHandlers(): Promise<any> {
-        await this.handlers[0].Load();
+        await this.handlers.EventHandler.Load()
+        await this.handlers.CommandHandler.Load()
     }
 }

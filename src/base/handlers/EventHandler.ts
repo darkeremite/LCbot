@@ -15,7 +15,7 @@ export class EventHandler implements IHandler{
       .map(filepath => path.resolve(filepath));
       
       files.map(async (file:string) => {
-         const event:Event = new(await import(file)).default();
+         const event:Event = new(await import(file)).default(this.client);
 
          if (!event.name) {
             return delete require.cache[require.resolve(file)]
