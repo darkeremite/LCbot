@@ -11,15 +11,14 @@ export class EventHandler implements IHandler{
 
    async Load(): Promise<any> {
       const files = (await glob("build/events/*.js"))
-      //@ts-ignore
       .map(filepath => path.resolve(filepath));
       
       files.map(async (file:string) => {
          const event:Event = new(await import(file)).default(this.client);
 
-         if (!event.name) {
+         /* if (!event.name) {
             return delete require.cache[require.resolve(file)]
-         }
+         } */
 
          const execute = (...args:any) => event.Execute(...args);
          if (event.once) {

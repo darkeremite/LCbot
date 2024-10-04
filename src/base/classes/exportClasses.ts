@@ -1,3 +1,6 @@
 export * from "./BotBody"
 export * from "./Event"
 export * from "./Command"
+export * from "./Component"
+export * from "./Button"
+export * from "./Modal"

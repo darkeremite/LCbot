@@ -1,5 +1,5 @@
 import { Event, BotBody, Command } from "@classes"
-import { Collection, Events, REST, Routes } from "discord.js"
+import { ApplicationCommandType, Collection, ContextMenuCommandBuilder, Events, REST, Routes } from "discord.js"
 
 export default class Ready extends Event {
    constructor(client:BotBody) {
@@ -25,13 +25,25 @@ export default class Ready extends Event {
       const data: object[] = [];
 
       commands.forEach(command => {
-         data.push({
-            name: command.name,
-            description: command.description,
-            options: command.options,
-            default_member_permissions: command.default_member_permissions.toString(),
-            dm_permission: command.dm_permission
-         })
+         if (command.type == 1) {
+            data.push({
+               name: command.name,
+               description: command.description,
+               type: command.type,
+               options: command.options,
+               default_member_permissions: command.default_member_permissions.toString(),
+               dm_permission: command.dm_permission
+            })
+         }
+         else {
+            data.push({
+               name: command.name,
+               type: command.type,
+               options: command.options,
+               default_member_permissions: command.default_member_permissions.toString(),
+               dm_permission: command.dm_permission
+            })
+         }
       })
 
       return data

@@ -15,7 +15,7 @@ export class CommandHandler implements IHandler{
       .map(filepath => path.resolve(filepath));
       
       files.map(async (file:string) => {
-         const command:Command = new(await import(file)).default();
+         const command:Command = new(await import(file)).default(this.client);
 
          this.client.commands.set(command.name, command as Command);
       })
